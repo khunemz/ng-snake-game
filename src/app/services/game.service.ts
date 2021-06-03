@@ -18,8 +18,8 @@ export class GameService {
     return of(players);
   }  
   
-  initGame(): Observable<Game> {
-    return of(game);
+  initGame(metricSize: number): Observable<Game> {
+    return of(game(metricSize));
   }
 
   saveGameStats(stats: GameStats): Observable<GameStats[]> {
@@ -56,14 +56,16 @@ const players  = [
 ];
 
 
-const randGoToIndex = (size: number) => {
-  return Math.floor(Math.random() * (size - 1 + 1) + 1);
+const rand = (max: number, min: number) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
 const metrics = (meticsSize: number, maxObstruct: number) => {
 
   let mets = [] as Metric[];
   let obstructCount = 0;
   for (let i = 0; i < meticsSize; i++) {
+    const isAddObstruct = rand(1,0);
     let element = {} as Metric;
     if(i === 0) {
       element = {
@@ -87,8 +89,8 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         iconUrl: "",
       };
     }
-    else if((i !== 0 ) && (i !== (meticsSize - 1)) && (obstructCount < maxObstruct)){
-      const randIndex = randGoToIndex(meticsSize);
+    else if((i !== 0 ) && (i !== (meticsSize - 1)) && (obstructCount < maxObstruct) && (isAddObstruct === 1)){
+      const randIndex = rand(meticsSize, 0);
       element = {
         index: i,
         position: (i+1),
@@ -98,6 +100,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         description: `ไปยังช่องที่ ${randIndex}`,
         iconUrl: "",
       };
+      obstructCount++;
     } else {
       element = {
         index: i,
@@ -114,18 +117,20 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
   }
   return mets;
 };
-const game : Game  = {
-  gameId: 1,
-  gameCode: 'G01',
-  gameName: 'Snake Game',
-  maxScore: Number.MAX_SAFE_INTEGER,
-  minScore: 0,
-  maxTime: 3600, // in second
-  maxTurnCount: Number.MAX_SAFE_INTEGER,
-  matricX: 5,
-  matricY: 5,
-  maxObstruct: 5,
-  matrics: metrics(25, 5)
-}
+const game  = (metricSize: number) => (
+  {
+    gameId: 1,
+    gameCode: 'G01',
+    gameName: 'Snake Game',
+    maxScore: Number.MAX_SAFE_INTEGER,
+    minScore: 0,
+    maxTime: 3600, // in second
+    maxTurnCount: Number.MAX_SAFE_INTEGER,
+    matricX: Math.sqrt(metricSize),
+    matricY: Math.sqrt(metricSize),
+    maxObstruct: 5,
+    matrics: metrics(metricSize, Math.sqrt(metricSize))
+  }
+);
 
 const gameStats: GameStats[] = [];
