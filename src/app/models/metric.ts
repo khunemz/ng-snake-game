@@ -9,5 +9,6 @@ export interface Metric {
   description: string;
   iconUrl: string;
   isHasObstruct: boolean;
+  isRepeatable: boolean;
   bonus: number;
 }

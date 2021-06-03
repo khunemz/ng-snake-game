@@ -64,12 +64,14 @@ const rand = (max: number, min: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-const metrics = (meticsSize: number, maxObstruct: number) => {
+const metrics = (meticsSize: number, maxObstruct: number, maxRepeatDraw: number) => {
 
   let mets = [] as Metric[];
   let obstructCount = 0;
+  let addRepeatCount = 0;
   for (let i = 0; i < meticsSize; i++) {
     const isAddObstruct = rand(1,0);
+    const isAddRepeatDraw = rand(1,0);
     let element = {} as Metric;
     if(i === 0) {
       element = {
@@ -81,6 +83,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         description: "START",
         iconUrl: "",
         isHasObstruct: false,
+        isRepeatable: false,
         bonus: 0,
       };
     }
@@ -94,8 +97,22 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         description: "FINISH",
         iconUrl: "",
         isHasObstruct: false,
+        isRepeatable: false,
         bonus: 0,
       };
+    } else if (isAddRepeatDraw) {
+      element = {
+        index: i,
+        position: (i+1),
+        isStart: 0,
+        isFinish: 0,
+        moveToIndex: -1,
+        description: `ได้ทอยลูกต๋าฟรี 1 ครั้ง`,
+        iconUrl: "",
+        isHasObstruct: false,
+        isRepeatable: true,
+        bonus: 0,
+      }
     }
     else if((i !== 0 ) && (i !== (meticsSize - 1)) && (obstructCount < maxObstruct) && (isAddObstruct === 1)){
       const randIndex = rand(meticsSize, 0);
@@ -109,6 +126,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
           description: randIndex != meticsSize ? `ไปยังช่องที่ ${randIndex + 1}` : `ไปยังช่องที่ ${randIndex}`,
           iconUrl: "",
           isHasObstruct: true,
+          isRepeatable: false,
           bonus: randIndex - i,
         };
         obstructCount++;
@@ -123,6 +141,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         description: "",
         iconUrl: "",
         isHasObstruct: false,
+        isRepeatable: false,
         bonus: 0 ,
       };
     }
@@ -143,7 +162,7 @@ const game  = (metricSize: number, maxObstruct: number) => (
     matricX: Math.sqrt(metricSize),
     matricY: Math.sqrt(metricSize),
     maxObstruct: maxObstruct,
-    matrics: metrics(metricSize, maxObstruct)
+    matrics: metrics(metricSize, maxObstruct, 4)
   }
 );
 

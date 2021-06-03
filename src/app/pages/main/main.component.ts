@@ -84,7 +84,7 @@ export class MainComponent implements OnInit {
       pointPerTurn: 0,
       accumScore: 0,
       currentMetricIndex: 0,
-      metaDescription: `${player.playerName} : 0 point | เริ่มเกม`,
+      metaDescription: `${player.playerName} : 0 point`,
       timestamp: (new Date()).toString(),
     };
     this.gameStats.push(stats);
@@ -102,7 +102,6 @@ export class MainComponent implements OnInit {
     }
     const player = this.players[this.playerIndex];
     this.currentPlayer = player;
-    console.log(this.currentPlayer);
     const previousStatsArr = this.gameStats.filter(x => x.playerId == player.playerId);
     const prevStat = previousStatsArr.pop();
     const diceScore = this.randDice(6, 1);
@@ -157,7 +156,9 @@ export class MainComponent implements OnInit {
     }
 
     if (this.playerIndex < this.players.length - 1) {
-      this.playerIndex++;
+      if(!possibleNextMatric?.isRepeatable) {
+        this.playerIndex++;
+      }
     } else {
       this.playerIndex = 0;
     }
@@ -165,6 +166,9 @@ export class MainComponent implements OnInit {
     if (player.currentIndex === this.metricSize - 1) {
       this.isFinish = true;
     }
+    
+    // repeat
+    
     this.turnNumber++;
   }
 
