@@ -1,6 +1,6 @@
 export interface Obstruct {
-  index: number;
-  decreasing: number;
+  penaltyPoint: number;
+  rewardPoint: number;
   description: string;
   iconUrl: string;
 }

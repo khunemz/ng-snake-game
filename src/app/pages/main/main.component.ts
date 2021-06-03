@@ -21,7 +21,9 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     // init game
-    this.gameService.initGame().subscribe(game => this.game = game);
+    this.gameService.initGame().subscribe(game => {
+      this.game = game;
+    });
     // get players
     this.gameService.getAllPlayers().subscribe(users => this.players = users);
     
@@ -38,9 +40,7 @@ export class MainComponent implements OnInit {
         timestamp: (new Date()).toString(),
       };
       this.gameStats.push(stats)
-      // [...this.gameStats, stats];
-      // todo: add this to http service
-      // this.gameService.saveGameStats(stats).subscribe(stats => this.gameStats = stats);
+
     });
   }
 

@@ -1,3 +1,5 @@
+import { Metric } from "./metric";
+
 export interface Game {
   gameId: number;
   gameCode: string;
@@ -9,4 +11,6 @@ export interface Game {
   matricX: number;
   matricY: number;
   maxObstruct: number;
+  matrics: Metric[];
 }
+
