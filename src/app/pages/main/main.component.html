@@ -1,1 +1,46 @@
-<p>main works!</p>
+<div class="container">
+  <div class="row d-flex">
+    <div class="col-8 col-md-8 col-sm-12 col-xs-12">
+      Board
+      <div class="box-wrapper">
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+        <div class="box-light">Box</div>
+        <div class="box-white">Box</div>
+      </div>
+
+    </div>
+    <div class="col-4 col-md-4 col-sm-4 d-xs-none">
+      Score
+      <div class="col-12">
+        Your turn 
+        username !!
+      </div>
+      <div class="col-12">
+        same transaction
+      </div>
+
+      <div class="col-12">
+        <div class="players">
+          <div class="player" *ngFor="let player of players">{{player.username}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
