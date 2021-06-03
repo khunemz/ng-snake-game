@@ -5,7 +5,7 @@ import { Game } from '../models/game';
 import { GameStats } from '../models/game-stats';
 import { Metric } from '../models/metric';
 import { Obstruct } from '../models/obstruct';
-import { User } from '../models/user';
+import { Player } from '../models/player';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +14,12 @@ export class GameService {
 
   constructor(private http: HttpClient) { }
 
-  getAllPlayers(): Observable<User[]> {
+  getAllPlayers(): Observable<Player[]> {
     return of(players);
   }  
   
   initGame(metricSize: number): Observable<Game> {
-    return of(game(metricSize));
+    return of(game(metricSize, 10));
   }
 
   saveGameStats(stats: GameStats): Observable<GameStats[]> {
@@ -30,26 +30,26 @@ export class GameService {
 
 const players  = [
   { 
-    userId: 1,
-    username: 'khunemz', 
+    playerId: 1,
+    playerName: 'khunemz', 
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'Khunemz Roobklom' ,
   }, 
   { 
-    userId: 2,
-    username: 'TonyWoodsome', 
+    playerId: 2,
+    playerName: 'TonyWoodsome', 
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'Thaksin Sinawatra' ,
   }, 
   { 
-    userId: 3,
-    username: 'pooyingluck', 
+    playerId: 3,
+    playerName: 'pooyingluck', 
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'Yingluck Sinawatra' ,
   }, 
   { 
-    userId: 4, 
-    username: 'JD',
+    playerId: 4, 
+    playerName: 'JD',
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'John Doe' ,
   }, 
@@ -77,6 +77,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         description: "START",
         iconUrl: "",
         isHasObstruct: false,
+        bonus: 0,
       };
     }
     else if (i === (meticsSize - 1)) {
@@ -89,11 +90,11 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         description: "FINISH",
         iconUrl: "",
         isHasObstruct: false,
+        bonus: 0,
       };
     }
     else if((i !== 0 ) && (i !== (meticsSize - 1)) && (obstructCount < maxObstruct) && (isAddObstruct === 1)){
       const randIndex = rand(meticsSize, 0);
-      console.log(randIndex);
       element = {
         index: i,
         position: (i+1),
@@ -103,6 +104,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         description: `ไปยังช่องที่ ${randIndex}`,
         iconUrl: "",
         isHasObstruct: true,
+        bonus: randIndex - i,
       };
       obstructCount++;
     } else {
@@ -115,6 +117,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         description: "",
         iconUrl: "",
         isHasObstruct: false,
+        bonus: 0 ,
       };
     }
 
@@ -122,7 +125,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
   }
   return mets;
 };
-const game  = (metricSize: number) => (
+const game  = (metricSize: number, maxObstruct: number) => (
   {
     gameId: 1,
     gameCode: 'G01',
@@ -133,8 +136,8 @@ const game  = (metricSize: number) => (
     maxTurnCount: Number.MAX_SAFE_INTEGER,
     matricX: Math.sqrt(metricSize),
     matricY: Math.sqrt(metricSize),
-    maxObstruct: 5,
-    matrics: metrics(metricSize, Math.sqrt(metricSize))
+    maxObstruct: maxObstruct,
+    matrics: metrics(metricSize, maxObstruct)
   }
 );
 

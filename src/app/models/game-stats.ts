@@ -1,10 +1,13 @@
 export interface GameStats {
   id: number;
+  roomId: number;
   gameId: number;
-  userId: number;
+  playerId: number;
   turnNumber: number;
   pointPerTurn: number;
   accumScore: number;
+  currentMetricIndex: number;
   metaDescription: string;
   timestamp: string;
+  
 }
