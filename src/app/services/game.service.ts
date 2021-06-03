@@ -34,24 +34,28 @@ const players  = [
     playerName: 'khunemz', 
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'Khunemz Roobklom' ,
+    currentIndex: 0,
   }, 
   { 
     playerId: 2,
     playerName: 'TonyWoodsome', 
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'Thaksin Sinawatra' ,
+    currentIndex: 0,
   }, 
   { 
     playerId: 3,
     playerName: 'pooyingluck', 
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'Yingluck Sinawatra' ,
+    currentIndex: 0,
   }, 
   { 
     playerId: 4, 
-    playerName: 'JD',
+    playerName: 'TheRealDonaldTrump',
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
-    avatarName: 'John Doe' ,
+    avatarName: 'Donald Trump' ,
+    currentIndex: 0,
   }, 
 ];
 
@@ -95,18 +99,20 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
     }
     else if((i !== 0 ) && (i !== (meticsSize - 1)) && (obstructCount < maxObstruct) && (isAddObstruct === 1)){
       const randIndex = rand(meticsSize, 0);
-      element = {
-        index: i,
-        position: (i+1),
-        isStart: 0,
-        isFinish: 0,
-        moveToIndex: randIndex,
-        description: `ไปยังช่องที่ ${randIndex}`,
-        iconUrl: "",
-        isHasObstruct: true,
-        bonus: randIndex - i,
-      };
-      obstructCount++;
+      if(randIndex != i) {
+        element = {
+          index: i,
+          position: (i+1),
+          isStart: 0,
+          isFinish: 0,
+          moveToIndex: randIndex,
+          description: randIndex != meticsSize ? `ไปยังช่องที่ ${randIndex + 1}` : `ไปยังช่องที่ ${randIndex}`,
+          iconUrl: "",
+          isHasObstruct: true,
+          bonus: randIndex - i,
+        };
+        obstructCount++;
+      }
     } else {
       element = {
         index: i,

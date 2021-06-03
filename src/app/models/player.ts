@@ -3,4 +3,5 @@ export interface Player {
   playerName: string;
   avatarImgUrl: string;
   avatarName: string;
+  currentIndex: number;
 }

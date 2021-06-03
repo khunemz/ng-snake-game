@@ -18,7 +18,11 @@
       </div>
       <div class="col-12">
         <ul>
-          <li *ngFor="let stats of gameStats">{{stats.metaDescription}}</li>
+          <div *ngFor="let stats of gameStats">
+            <div *ngIf="stats.metaDescription !== ''">
+              {{stats.metaDescription}}
+            </div>
+          </div>
         </ul>
       </div>
 

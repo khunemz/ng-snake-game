@@ -12,7 +12,7 @@ export class PlayerService {
 
   constructor(private http: HttpClient) { }
   
-  getAllUsers(): Observable<Player[]> {
+  getAllPlayers(): Observable<Player[]> {
     return of(users);
   }
 }
@@ -23,23 +23,30 @@ const users  = [
     playerName: 'khunemz', 
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'Khunemz Roobklom' ,
+    currentIndex: 0,
   }, 
   { 
     playerId: 2,
     playerName: 'TonyWoodsome', 
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'Thaksin Sinawatra' ,
+    currentIndex: 0,
+
   }, 
   { 
     playerId: 3,
-    playerName: 'pooyingluck', 
+    playerName: 'Pooyingluck', 
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
     avatarName: 'Yingluck Sinawatra' ,
+    currentIndex: 0,
+
   }, 
   { 
     playerId: 4, 
-    playerName: 'JD',
+    playerName: 'TheRealDonaldTrump',
     avatarImgUrl: 'http://www.gravatar.com/avatar.php?gravatar_id=df3d4780faaf2446a65ce39eafdfe1c0' ,
-    avatarName: 'John Doe' ,
+    avatarName: 'Donald Trump' ,
+    currentIndex: 0,
+
   }, 
 ];
