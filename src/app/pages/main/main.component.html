@@ -3,26 +3,10 @@
     <div class="col-8 col-md-8 col-sm-12 col-xs-12">
       Board
       <div class="box-wrapper">
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
-        <div class="box-light">Box</div>
-        <div class="box-white">Box</div>
+
+        <div *ngFor="let metric of game.matrics.reverse()" class="box-white">
+          {{metric.position}} {{metric.description}}
+        </div>
       </div>
 
     </div>

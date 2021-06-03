@@ -76,6 +76,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         moveToIndex: i,
         description: "START",
         iconUrl: "",
+        isHasObstruct: false,
       };
     }
     else if (i === (meticsSize - 1)) {
@@ -87,10 +88,12 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         moveToIndex: (meticsSize - 1),
         description: "FINISH",
         iconUrl: "",
+        isHasObstruct: false,
       };
     }
     else if((i !== 0 ) && (i !== (meticsSize - 1)) && (obstructCount < maxObstruct) && (isAddObstruct === 1)){
       const randIndex = rand(meticsSize, 0);
+      console.log(randIndex);
       element = {
         index: i,
         position: (i+1),
@@ -99,6 +102,7 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         moveToIndex: randIndex,
         description: `ไปยังช่องที่ ${randIndex}`,
         iconUrl: "",
+        isHasObstruct: true,
       };
       obstructCount++;
     } else {
@@ -107,9 +111,10 @@ const metrics = (meticsSize: number, maxObstruct: number) => {
         position: (i+1),
         isStart: 0,
         isFinish: 0,
-        moveToIndex: undefined,
+        moveToIndex: -1,
         description: "",
         iconUrl: "",
+        isHasObstruct: false,
       };
     }
 

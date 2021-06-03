@@ -8,4 +8,5 @@ export interface Metric {
   moveToIndex?: number;
   description: string;
   iconUrl: string;
+  isHasObstruct: boolean;
 }
