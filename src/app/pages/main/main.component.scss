@@ -1,28 +1,17 @@
 .box-wrapper {
   display: flex;
   flex-wrap: wrap;
-  margin: 40px 5px;
+  margin: 40px 10px;
   background-color: #f8f9fa;
   align-items: stretch;
 }
-.box-light {
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 150px;
+.box {
   height: 150px;
-  background-color: #f8f9fa;
-  border: 1.5px solid #000;
-  border-radius: 5%;
-}
-
-.box-white {
-  width: 150px;
-  height: 150px;
+  // width: calc(100% * (1/5));
   background-color: #fff;
   border: 1.5px solid #000;
   border-radius: 5%;
+  flex-grow: 1;
 }
 
 .player {

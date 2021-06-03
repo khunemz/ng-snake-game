@@ -2,6 +2,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/app/models/game';
 import { GameStats } from 'src/app/models/game-stats';
+import { Metric } from 'src/app/models/metric';
 import { Player } from 'src/app/models/player';
 import { PlayerGame } from 'src/app/models/player-game';
 import { GameService } from 'src/app/services/game.service';
@@ -25,15 +26,15 @@ export class MainComponent implements OnInit {
   playerGame: PlayerGame[] = [];
   turnNumber = 1;
   metricSize: number = 0;
-
+  styleBox: string = '';
   constructor(private playerService: PlayerService, private gameService: GameService) {
   }
 
   ngOnInit(): void {
     // todo get routing params for room id
-    this.metricSize = 25;
+    this.metricSize = 36;
 
-    this.initGame();
+    this.initGame(this.metricSize);
 
     this.initPlayer();
 
@@ -63,15 +64,21 @@ export class MainComponent implements OnInit {
     this.gameService.getAllPlayers().subscribe(players => this.players = players);
   }
 
-  initGame(): void {
+  initGame(size: number): void {
     // init game
-    this.gameService.initGame(25).subscribe(game => {
+    this.gameService.initGame(size).subscribe(game => {
       this.game = game;
+      this.calSizeBox();
     });
   }
 
   initCurrentPlayer(): void {
     this.currentPlayer = this.players[this.playerIndex];
+  }
+
+  calSizeBox() {
+    const sizing = Math.sqrt(this.metricSize);
+    this.styleBox = `calc(100% * (1/${sizing})`;
   }
 
   pushStats(player: Player, index: number): void {
@@ -109,13 +116,18 @@ export class MainComponent implements OnInit {
     let possibleNextIndex = this.currentPlayer.currentIndex + diceScore;
     if(possibleNextIndex >= this.metricSize - 1) {
       possibleNextIndex = this.metricSize - 1;
+      this.isFinish = true;
     }
     let possibleNextMatric = this.game.matrics.find(x => x.index === possibleNextIndex);
     let score = diceScore;
     let isDeclaredScore = false;
     while (possibleNextMatric?.isHasObstruct) {
-      const nextIndex = possibleNextMatric.moveToIndex;
+      let nextIndex = possibleNextMatric.moveToIndex;
       const nextMetrics = this.game.matrics.find(x => x.index === nextIndex);
+      if(nextIndex! >= this.metricSize - 1) {
+        nextIndex = this.metricSize - 1;
+        break;
+      }
       let prevId = Number(prevStat?.id);
       const stats = {
         id: prevId++,
@@ -132,9 +144,9 @@ export class MainComponent implements OnInit {
               possibleNextMatric.description : ''}` : '',
         timestamp: (new Date()).toString(),
       };
-
       this.gameStats.push(stats)
       possibleNextMatric = nextMetrics;
+      this.moveMarker(player, possibleNextMatric!);
       isDeclaredScore = true;
     }
     this.currentPlayer.currentIndex = Number(possibleNextMatric?.index);
@@ -166,10 +178,12 @@ export class MainComponent implements OnInit {
     if (player.currentIndex === this.metricSize - 1) {
       this.isFinish = true;
     }
-    
-    // repeat
-    
+
     this.turnNumber++;
+  }
+
+  moveMarker(player: Player, metric: Metric): void {
+    console.log(metric);
   }
 
   randDice(max: number, min: number): number {
